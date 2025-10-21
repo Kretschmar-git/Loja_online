@@ -5,3 +5,15 @@ INNER JOIN loja as l
 on p.id = e.id_produto
 AND l.id = e.id_loja
 where l.cidade LIKE "%Sao Paulo%";
+
+----------------------------------
+
+SELECT p.nome, c.descricao 
+FROM produto as p
+INNER JOIN produto_caracteristica as pc
+INNER JOIN caracteristica as c
+on p.id = pc.id_produto
+AND c.id = pc.id_caracteristica
+;
+
+------------------------------------
