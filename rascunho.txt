@@ -1,0 +1,7 @@
+SELECT p.nome, p.descricao 
+FROM produto as p
+INNER JOIN estoque as e
+INNER JOIN loja as l
+on p.id = e.id_produto
+AND l.id = e.id_loja
+where l.cidade LIKE "%Sao Paulo%";
