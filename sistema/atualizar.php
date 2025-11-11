@@ -6,12 +6,13 @@
     $preco = $_POST['preco'];
     $tipo = $_POST['tipo'];
     $categoria = $_POST['categoria'];
-    $data_lancamento = $_POST['data_lancamento'];
-    $desconto_usados = $_POST['desconto_usados'];
+    $data = $_POST['data'];
+    $desconto = $_POST['desconto'];
 
-    $sql = $pdo->prepare("UPDATE produto SET nome = ?, descricao = ?, preco = ?, tipo = ?, categoria = ?, 
-    data_lancamento  = ?, desconto_usados= ? WHERE id = ?");
-    $sql->execute([$nome, $descricao, $preco, $tipo, $categoria, $data_lancamento, $desconto_usados, $id]);
+    $sql = $pdo->prepare("UPDATE Produto SET nome = ?, descricao = ?, 
+    preco = ?, tipo = ?, categoria = ?, data_lancamento = ?, 
+    desconto_usados = ? WHERE id = ?");
+    $sql->execute([$nome, $descricao, $preco, $tipo, $categoria, $data, $desconto, $id]);
 
     header("Location: produtos.php");
     exit;

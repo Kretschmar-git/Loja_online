@@ -1,9 +1,19 @@
 <?php 
 include 'conexao.php';
 $id = $_POST['btnEditar'];
-$sql = $pdo->prepare("SELECT * FROM produto WHERE id = ?");
+$sql = $pdo->prepare("SELECT * FROM Produto WHERE id = ?");
 $sql->execute([$id]);
 $linha = $sql->fetch(PDO::FETCH_ASSOC);
+
+
+$sql = $pdo->prepare("SELECT COLUMN_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = ?
+  AND TABLE_NAME = ?
+  AND COLUMN_NAME = ?;");
+
+$sql->execute([$banco, 'produto', 'tipo']);
+$colunaTipo = $sql->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -12,43 +22,44 @@ $linha = $sql->fetch(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <title>Editar Produto</title>
+    <title>Editar Aluno</title>
 </head>
 <body>
-    <h1>Editar o Produto: <?php echo $linha['nome']?></h1>
-
-    <div class="container">
+    <div class="container my-4">
+        <h1>Editar o produto: <?php echo $linha['nome']?></h1>
         <form action="atualizar.php" method="POST">
             <input type="hidden" name="id"
-            value="<?php echo $linha['id']?>" class="form-control"><br>
+            value="<?php echo $linha['id']?>" class="form-control">
 
-            <label for="name" class="form-label">Nome do produto: </label>
             <input type="text" name="nome" 
-            value="<?php echo $linha['nome']?>" class="form-control"><br>
+            value="<?php echo $linha['nome']?>" class="form-control">
 
-            <label for="descricao" class="form-label">Descricao do produto: </label>
             <input type="text" name="descricao"
-            value="<?php echo $linha['descricao']?>" class="form-control"><br>
+            value="<?php echo $linha['descricao']?>" class="form-control">
 
-            <label for="preco" class="form-label">Preco do produto: </label>
             <input type="text" name="preco"
-            value="<?php echo $linha['preco']?>" class="form-control"><br>
+            value="<?php echo $linha['preco']?>" class="form-control">
 
-            <label for="tipo" class="form-label">tipo: </label>
-            <input type="text" name="tipo" 
-            value="<?php echo $linha['tipo']?>" class="form-control"><br>
+            <?php 
+                while($linha['tipo'] = $selectTipo->fetch(PDO::FETCH_ASSOC)){
+            ?>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option selected>Selecione um tipo...</option>
+                <option value="1">One</option>
+            </select>
+            <?php } ?>
 
-            <label for="categoria" class="form-label">categoria: </label>
-            <input type="text" name="categoria" 
-            value="<?php echo $linha['categoria']?>" class="form-control"><br>
+            <input type="text" name="tipo"
+            value="<?php echo $linha['tipo']?>" class="form-control">
+            
+            <input type="text" name="categoria"
+            value="<?php echo $linha['categoria']?>" class="form-control">
 
-            <label for="data_lancamento" class="form-label">Data de lançamento: </label>
-            <input type="date" name="data_lancamento"
-            value="<?php echo $linha['data_lancamento']?>" class="form-control"><br>
+            <input type="date" name="data"
+            value="<?php echo $linha['data_lancamento']?>" class="form-control">
 
-            <label for="desconto_usados" class="form-label">desconto usados: </label>
-            <input type="text" name="desconto_usados"
-            value="<?php echo $linha['desconto_usados']?>" class="form-control"><br>
+            <input type="text" name="desconto"
+            value="<?php echo $linha['desconto_usados']?>" class="form-control">
 
             <input type="submit" name="btnSalvar" value="Salvar"
             class="btn btn-primary">
